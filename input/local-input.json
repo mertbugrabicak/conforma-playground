@@ -1,0 +1,37 @@
+{
+  "attestations": [
+    {
+      "statement": {
+        "_type": "https://in-toto.io/Statement/v0.1",
+        "predicateType": "https://spdx.dev/spdx/v2.2.2",
+        "subject": [
+          {
+            "name": "my-local-image",
+            "digest": {
+              "sha256": "dummy-digest"
+            }
+          }
+        ],
+        "predicate": {
+          "SPDXID": "SPDXRef-DOCUMENT",
+          "spdxVersion": "SPDX-2.2",
+          "packages": [
+            {
+              "name": "log4j",
+              "versionInfo": "2.14.1", 
+              "licenseConcluded": "Apache-2.0"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "image": {
+    "ref": "localhost/my-app:latest",
+    "config": {
+      "Labels": {
+        "maintainer": "me@example.com"
+      }
+    }
+  }
+}

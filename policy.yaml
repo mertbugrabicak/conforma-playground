@@ -1,0 +1,5 @@
+sources:
+  - name: ec-override-policy
+    policy:
+    - file::./policy/
+    - git::https://github.com/conforma/policy.git//policy/lib
