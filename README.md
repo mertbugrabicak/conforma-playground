@@ -22,3 +22,11 @@ Run the below command:
 ```bash
 ec validate input --file input/local-input.json --policy policy.yaml
 ```
+
+## How to wrap attestion for own SBOM
+
+Since the input for the release policies relies on a certain payload of attestations and such, this script helps convert the raw SBOM to an attestation within the payload required of the input.
+
+```python
+python3 wrap_sbom.py input/my-sbom.json -o input/my-sbom-input-payload.json
+```

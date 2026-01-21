@@ -2,7 +2,7 @@
 # title: Test Policy
 # description: >-
 #   Test description
-package sbom
+package custom
 
 import data.lib
 import rego.v1
@@ -17,17 +17,18 @@ deny contains result if {
     # 1. Iterate over all attestations in the input
     some att in input.attestations
     
-    # 2. Iterate over packages (Assumes SPDX format based on 'predicate.packages')
-    # If using CycloneDX, this path might be 'predicate.components'
-    some pkg in att.statement.predicate.packages
+    # 2. Iterate over COMPONENTS (CycloneDX uses 'components', SPDX uses 'packages')
+    # CHANGED THIS LINE:
+    some comp in att.statement.predicate.components
     
     # 3. The Condition: Match the banned package name
-    pkg.name == "log4j"
+    # Note: In your input example, the name is "log4j-core". 
+    # Exact match "log4j" might fail, so checking if it contains the string is often safer.
+    contains(comp.name, "log4j")
 
-    # 4. Construct the Result using the EC library helper
-    # We pass [pkg.name] as the argument to fill the '%s' in failure_msg
+    # 4. Construct the Result
     result := object.union(
-        lib.result_helper(rego.metadata.chain(), [pkg.name]),
+        lib.result_helper(rego.metadata.chain(), [comp.name]),
         {"foo": "bar"},
     )
 }

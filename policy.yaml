@@ -1,5 +1,40 @@
 sources:
-  - name: ec-override-policy
+  - name: Release Policy Testing from Input
+    data:
+    - github.com/release-engineering/rhtap-ec-policy//data
+    - oci::quay.io/konflux-ci/tekton-catalog/data-acceptable-bundles:latest
+    - oci::quay.io/konflux-ci/konflux-vanguard/data-acceptable-bundles:latest
+    - oci::quay.io/konflux-ci/integration-service-catalog/data-acceptable-bundles:latest
     policy:
     - file::./policy/
-    - git::https://github.com/conforma/policy.git//policy/lib
+    - oci::quay.io/conforma/release-policy:konflux
+    config:
+      exclude:
+      - labels.required_labels
+      - labels.optional_labels
+      - cve.cve_results_found
+      - test.test_data_found
+      - test.no_skipped_tests:sast-snyk-check
+      - test.no_skipped_tests:sast-snyk-check-oci-ta
+      - tasks.required_tasks_found:clair-scan
+      - tasks.required_tasks_found:clamav-scan
+      - tasks.required_tasks_found:prefetch-dependencies
+      - tasks.required_tasks_found:source-build
+      - tasks.required_tasks_found:source-build-oci-ta
+      - tasks.required_tasks_found:rpms-signature-scan
+      - tasks.pipeline_required_tasks_list_provided
+      - hermetic_build_task.build_task_hermetic
+      - base_image_registries.base_image_info_found
+      - redhat_manifests.redhat_manifests_missing:root/buildinfo/content_manifests/sbom-purl.json
+      - source_image.exists
+      - attestation_type.pipelinerun_attestation_found
+      - slsa_build_scripted_build.image_built_by_trusted_task
+      - slsa_source_correlated.attested_source_code_reference
+      - slsa_source_correlated.source_code_reference_provided
+      - olm.inaccessible_snapshot_references
+      - olm.unpinned_snapshot_references
+      - schedule.weekday_restriction
+      - labels.rule_data_provided
+      include:
+      - '@redhat'
+      - custom

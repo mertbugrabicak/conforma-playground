@@ -3,23 +3,26 @@
     {
       "statement": {
         "_type": "https://in-toto.io/Statement/v0.1",
-        "predicateType": "https://spdx.dev/spdx/v2.2.2",
+        "predicateType": "https://cyclonedx.org/bom",
         "subject": [
           {
             "name": "my-local-image",
             "digest": {
-              "sha256": "dummy-digest"
+              "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
             }
           }
         ],
         "predicate": {
-          "SPDXID": "SPDXRef-DOCUMENT",
-          "spdxVersion": "SPDX-2.2",
-          "packages": [
+          "bomFormat": "CycloneDX",
+          "specVersion": "1.4",
+          "version": 1,
+          "components": [
             {
               "name": "log4j",
-              "versionInfo": "2.14.1", 
-              "licenseConcluded": "Apache-2.0"
+              "group": "org.apache.logging.log4j",
+              "version": "2.14.1",
+              "type": "library",
+              "purl": "pkg:maven/org.apache.logging.log4j/log4j@2.14.1"
             }
           ]
         }
@@ -27,7 +30,7 @@
     }
   ],
   "image": {
-    "ref": "localhost/my-app:latest",
+    "ref": "localhost/my-app@sha256:0000000000000000000000000000000000000000000000000000000000000000",
     "config": {
       "Labels": {
         "maintainer": "me@example.com"
