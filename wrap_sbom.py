@@ -42,16 +42,7 @@ def create_mock_input(sbom_data, predicate_type):
                     "predicate": sbom_data
                 }
             }
-        ],
-        "image": {
-            "ref": DUMMY_REF,
-            "config": {
-                "Labels": {
-                    "maintainer": "local-test",
-                    "description": "Mock image for EC policy testing"
-                }
-            }
-        }
+        ]
     }
 
 def main():

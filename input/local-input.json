@@ -28,13 +28,5 @@
         }
       }
     }
-  ],
-  "image": {
-    "ref": "localhost/my-app@sha256:0000000000000000000000000000000000000000000000000000000000000000",
-    "config": {
-      "Labels": {
-        "maintainer": "me@example.com"
-      }
-    }
-  }
+  ]
 }
