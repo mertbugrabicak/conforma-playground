@@ -6,29 +6,24 @@ package custom
 
 import data.lib
 import rego.v1
+import data.lib.sbom
 
 # METADATA
-# title: No Log4j Allowed
-# description: Check if the SBOM contains the restricted package 'log4j'
+# title: CycloneDX 1.6 Detected
+# description: Informational warning to confirm we are seeing a CycloneDX 1.6 SBOM.
 # custom:
-#   short_name: no_log4j_allowed
-#   failure_msg: Found restricted package '%s'
-deny contains result if {
-    # 1. Iterate over all attestations in the input
-    some att in input.attestations
+#   short_name: cdx_1_6_detected
+#   failure_msg: SBOM is using CycloneDX spec version %s
+warn contains result if {
+    some sbom_doc in sbom.all_sboms
     
-    # 2. Iterate over COMPONENTS (CycloneDX uses 'components', SPDX uses 'packages')
-    # CHANGED THIS LINE:
-    some comp in att.statement.predicate.components
+    # Check that it is CycloneDX
+    sbom_doc.bomFormat == "CycloneDX"
     
-    # 3. The Condition: Match the banned package name
-    # Note: In your input example, the name is "log4j-core". 
-    # Exact match "log4j" might fail, so checking if it contains the string is often safer.
-    contains(comp.name, "log4j")
+    # Check the version
+    version := sbom_doc.specVersion
+    version == "1.6"
 
-    # 4. Construct the Result
-    result := object.union(
-        lib.result_helper(rego.metadata.chain(), [comp.name]),
-        {"foo": "bar"},
-    )
+    # Return a warning result
+    result := lib.result_helper(rego.metadata.chain(), [version])
 }

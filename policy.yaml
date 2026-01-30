@@ -8,6 +8,7 @@ sources:
     policy:
       - github.com/mertbugrabicak/policy.git//policy/lib?ref=sbom-inclusion
       - github.com/mertbugrabicak/policy.git//policy/release?ref=sbom-inclusion
+      - file::./policy/
     data:
       - github.com/release-engineering/rhtap-ec-policy//data
       - oci::quay.io/konflux-ci/tekton-catalog/data-acceptable-bundles:latest
@@ -16,3 +17,4 @@ sources:
     config:
       include:
       - '@redhat'
+      - "custom"
