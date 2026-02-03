@@ -1,13 +1,14 @@
-name: Minimal (deprecated)
+name: Konflux Release Policies
 description: >-
-  Includes a set of basic checks that are expected to pass for all Konflux builds.
-  Source: https://github.com/enterprise-contract/config/blob/main/minimal/policy.yaml
+  Includes a set of basic checks that are expected to pass for Konflux Releases
 
 sources:
   - name: Default
     policy:
+      # These 2 repos are a fork of the Conforma Release policies and the lib (includes SBOM inclusion work-around)
       - github.com/mertbugrabicak/policy.git//policy/lib?ref=sbom-inclusion
       - github.com/mertbugrabicak/policy.git//policy/release?ref=sbom-inclusion
+      # Local folder reference to include custom policies
       - file::./policy/
     data:
       - github.com/release-engineering/rhtap-ec-policy//data
@@ -16,6 +17,7 @@ sources:
       - oci::quay.io/konflux-ci/integration-service-catalog/data-acceptable-bundles:latest
     config:
       include:
+      # Redhat and minimal collections from Conforma policies + the custom policies
       - '@redhat'
       - '@minimal'
       - "custom"
