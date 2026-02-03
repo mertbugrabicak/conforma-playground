@@ -17,4 +17,5 @@ sources:
     config:
       include:
       - '@redhat'
+      - '@minimal'
       - "custom"

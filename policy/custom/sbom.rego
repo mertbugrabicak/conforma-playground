@@ -2,6 +2,8 @@
 # title: Test Policy
 # description: >-
 #   Test description
+# custom:
+#   short_name: custom
 package custom
 
 import data.lib
@@ -13,7 +15,7 @@ import data.lib.sbom
 # description: Informational warning to confirm we are seeing a CycloneDX 1.6 SBOM.
 # custom:
 #   short_name: cdx_1_6_detected
-#   failure_msg: SBOM is using CycloneDX spec version %s
+#   failure_msg: SBOM is using CycloneDX spec version %s (This is a dummy custom policy)
 warn contains result if {
     some sbom_doc in sbom.all_sboms
     
