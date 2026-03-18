@@ -1,23 +1,14 @@
 name: Konflux Release Policies
 description: >-
-  Includes a set of basic checks that are expected to pass for Konflux Releases
+  Policy Configuration to test Konflux SBOM Policies on a set of SBOMs
 
 sources:
   - name: Default
     policy:
-      # These 2 repos are a fork of the Conforma Release policies and the lib (includes SBOM inclusion work-around)
-      - github.com/mertbugrabicak/policy.git//policy/lib?ref=sbom-inclusion
-      - github.com/mertbugrabicak/policy.git//policy/release?ref=sbom-inclusion
-      # Local folder reference to include custom policies
-      - file::./policy/
-    data:
-      - github.com/release-engineering/rhtap-ec-policy//data
-      - oci::quay.io/konflux-ci/tekton-catalog/data-acceptable-bundles:latest
-      - oci::quay.io/konflux-ci/konflux-vanguard/data-acceptable-bundles:latest
-      - oci::quay.io/konflux-ci/integration-service-catalog/data-acceptable-bundles:latest
+      - oci::quay.io/conforma/release-policy:latest
     config:
       include:
-      # Redhat and minimal collections from Conforma policies + the custom policies
-      - '@redhat'
-      - '@minimal'
-      - "custom"
+      # Only SBOM policies
+      - 'sbom'
+      - 'sbom_cyclonedx'
+      - 'sbom_spdx'

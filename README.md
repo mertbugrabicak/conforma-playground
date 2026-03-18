@@ -1,35 +1,44 @@
-# conforma-playground
-A place to test Conforma release policies on example OCI artifacts that contain Provenance, VSA, SBOMs and Signatures.
+Conforma SBOM Policy Validator
+==================================
 
-## Prerequisites
-- [Conforma CLI (`ec`)](https://github.com/conforma/cli) patched with a workaround for bypassing some parts is necessary for this experiment.
+This script is a specialized wrapper for **Conforma (Enterprise Contract)**. It automates the process of checking multiple Software Bill of Materials (SBOM) files against your organization's security and compliance policies.
 
-Here is how to build the binary for it:
+**What this script does**
+-------------------------
+
+Checking SBOMs manually against Conforma policies can be tedious. This script simplifies the workflow into a single command:
+
+1.  **Scans Folders:** Recursively finds every .json SBOM file in a directory.
+    
+2.  **Auto-Formats:** Automatically wraps raw SBOMs into the "In-Toto Statement" format that Conforma requires.
+    
+3.  **Validates:** Runs your **SBOM-specific policies** (CycloneDX or SPDX) against each file.
+    
+4.  **Generates Reports:** Creates a single, interactive **HTML Dashboard** that shows:
+    
+    *   Which files passed or failed.
+        
+    *   The specific **Rego policy code** that triggered a violation.
+        
+    *   A **code snippet** from the SBOM showing exactly where the error is.
+        
+
+**How to Use**
+--------------
+
+If your SBOMs are in a folder called incoming_sboms and your Conforma rules are in sbom-policy.yaml:
+
 ```bash
-git clone https://github.com/mertbugrabicak/cli.git -b debug/bypass-schema
-cd cli
-make build
-# use the executable that gets created in ./dist/ec
+python3 scan_sboms.py ./sboms --policy policy.yaml --output my_audit_results.html
 ```
 
-## Directory Structure
-```text
-.
-├── policy/
-│   └── custom/              # Directory containing own custom Rego rules
-├── policy.yaml            # The EC configuration file
-└── README.md
-```
+**Viewing Results**
+-------------------
 
-## How to run
+Once the script finishes, open the generated report.html in any web browser.
 
-Run the below command:
-
-```bash
-ec_patched validate image \
-  --image <oci-artifact-from-quay> \
-  --public-key key.pub \
-  --policy policy-general.yaml \
-  --ignore-rekor \
-  --output yaml
-```
+*   **Searchable:** Use the search bar to filter by filename or specific error messages.
+    
+*   **Evidence-Based:** Click on any "Violation" to see the exact JSON path and data that caused the policy to fail.
+    
+*   **Policy Overview:** The report embeds your policy.yaml content so you can verify which rules were applied during the scan.
