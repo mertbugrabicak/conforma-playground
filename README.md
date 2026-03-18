@@ -1,7 +1,7 @@
 Conforma SBOM Policy Validator
 ==================================
 
-This script is a specialized wrapper for **Conforma (Enterprise Contract)**. It automates the process of checking multiple Software Bill of Materials (SBOM) files against your organization's security and compliance policies.
+This script is a specialized report generator script for SBOM policies for **Conforma (Enterprise Contract)**. It automates the process of checking multiple Software Bill of Materials (SBOM) files against the organization's security and compliance policies.
 
 **What this script does**
 -------------------------
@@ -26,7 +26,7 @@ Checking SBOMs manually against Conforma policies can be tedious. This script si
 **How to Use**
 --------------
 
-If your SBOMs are in a folder called incoming_sboms and your Conforma rules are in sbom-policy.yaml:
+If your SBOMs are in a folder called ./sboms and your Conforma rules are in ./policy.yaml:
 
 ```bash
 python3 scan_sboms.py ./sboms --policy policy.yaml --output my_audit_results.html
